@@ -1,6 +1,5 @@
 import sys
 import os
-import string
 from PyQt5.QtWidgets import QApplication, QMainWindow, QFileDialog, QMessageBox
 import MainPy
 
@@ -29,10 +28,8 @@ class Example(QMainWindow):
 
     def on_select_file(self):
         file_dialog = QFileDialog()
-        filenames = list()
         filenames = file_dialog.getOpenFileNames(file_dialog, "选择视频文件", "./", "Video(*.mp4)")
         print(filenames)
-        tmp = string
         for i in filenames[0]:
             tmp = ''.join(i)
             print(tmp)
@@ -40,9 +37,7 @@ class Example(QMainWindow):
 
     def on_output_path(self):
         file_dialog = QFileDialog()
-        filenames = list()
         filenames = file_dialog.getExistingDirectory(file_dialog, "保存路径")
-        tmp = string
         tmp = ''.join(filenames)
         self.ui.lineEdit.setText(tmp)
 
@@ -63,7 +58,6 @@ class Example(QMainWindow):
 
     @staticmethod
     def decode(self, filepath, output_path):
-        print(filepath)
         filedir = os.path.dirname(filepath)   #获取文件路径
         file_raw_name = os.path.basename(filepath).split('.')[0] #获取文件名，不含后缀
         file_suffix_name = os.path.splitext(filepath)[-1] #获取文件后缀名
@@ -73,13 +67,13 @@ class Example(QMainWindow):
             QMessageBox().warning(self, "警告", "打开文件失败")
             return
         first_three = file.read(3)
-        print(bytes([255, 255, 255]))
         if first_three == bytes([255, 255, 255]):#检查文件前三个字节是不是ff,ff,ff
+            print("true")
             file.seek(3)
             byte = file.read()
             file.close()
             if self.ui.checkBox.isChecked():
-                output_path = filedir + file_raw_name + "_1" + file_suffix_name
+                output_path = filedir + "\\" + file_raw_name + "_1" + file_suffix_name
             else:
                 output_path = output_path + "\\" + file_raw_name + file_suffix_name
             print(output_path)
