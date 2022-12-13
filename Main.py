@@ -29,10 +29,10 @@ class Example(QMainWindow):
     def on_select_file(self):
         file_dialog = QFileDialog()
         filenames = file_dialog.getOpenFileNames(file_dialog, "选择视频文件", "./", "Video(*.mp4)")
-        print(filenames)
+        #print(filenames)
         for i in filenames[0]:
             tmp = ''.join(i)
-            print(tmp)
+            #print(tmp)
             self.ui.listWidget.addItem(tmp)
 
     def on_output_path(self):
@@ -52,8 +52,8 @@ class Example(QMainWindow):
     def on_start(self):
         for i in range(self.ui.listWidget.count()):
             self.decode(self, self.ui.listWidget.item(i).text(), self.ui.lineEdit.text())
-            print(i/self.ui.listWidget.count()*100)
-            print(self.ui.listWidget.count())
+            #print(i/self.ui.listWidget.count()*100)
+            #print(self.ui.listWidget.count())
             self.ui.progressBar.setValue(float((i+1))/(self.ui.listWidget.count())*100)
 
     @staticmethod
@@ -68,7 +68,7 @@ class Example(QMainWindow):
             return
         first_three = file.read(3)
         if first_three == bytes([255, 255, 255]):#检查文件前三个字节是不是ff,ff,ff
-            print("true")
+            #print("true")
             file.seek(3)
             byte = file.read()
             file.close()
@@ -76,7 +76,7 @@ class Example(QMainWindow):
                 output_path = filedir + "\\" + file_raw_name + "_1" + file_suffix_name
             else:
                 output_path = output_path + "\\" + file_raw_name + file_suffix_name
-            print(output_path)
+            #print(output_path)
             file = open(output_path, 'wb')
             file.seek(0)
             file.write(byte)
