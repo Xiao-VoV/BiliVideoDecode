@@ -22,6 +22,9 @@ class Example(QMainWindow):
         self.ui.buttonStart.clicked.connect(self.on_start)
         self.ui.checkBox.clicked.connect(self.on_checkbox)
         self.ui.lineEdit.setText(os.getcwd())
+        self.ui.progressBar.setMinimum(0)
+        self.ui.progressBar.setMaximum(100)
+        self.ui.progressBar.setValue(0)
         self.show()
 
     def on_select_file(self):
@@ -54,6 +57,9 @@ class Example(QMainWindow):
     def on_start(self):
         for i in range(self.ui.listWidget.count()):
             self.decode(self, self.ui.listWidget.item(i).text(), self.ui.lineEdit.text())
+            print(i/self.ui.listWidget.count()*100)
+            print(self.ui.listWidget.count())
+            self.ui.progressBar.setValue(float((i+1))/(self.ui.listWidget.count())*100)
 
     @staticmethod
     def decode(self, filepath, output_path):
